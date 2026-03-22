@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <title>MusixWave PRO • Nebula Cyberwave</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+
+    <!-- WaveSurfer.js -->
+    <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
+
+    <!-- Estilos personalizados - RUTA CORREGIDA CON / -->
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <!-- LOGIN SCREEN -->
+    <div id="login-screen">
+      <div class="glass-container">
+        <div class="logo-icon">
+          <i class="fas fa-waveform"></i>
+        </div>
+        <h1 class="title">NEBULA</h1>
+        <p class="subtitle">CYBERWAVE • PRO</p>
+
+        <div id="login-error" class="error-message hidden"></div>
+        <h2 id="form-title" class="form-title">BIENVENIDO</h2>
+
+        <form id="login-form">
+          <div class="input-group">
+            <label><i class="fas fa-user"></i> Usuario</label>
+            <input
+              type="text"
+              id="login-user"
+              placeholder="Ingresa tu usuario"
+              required
+            />
+          </div>
+          <div class="input-group">
+            <label><i class="fas fa-lock"></i> Contraseña</label>
+            <input
+              type="password"
+              id="login-pass"
+              placeholder="Ingresa tu contraseña"
+              required
+            />
+          </div>
+          <button type="submit" id="login-btn" class="btn-neon">
+            <span>INICIAR SESIÓN</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </form>
+
+        <form id="register-form" class="hidden">
+          <div class="input-group">
+            <label><i class="fas fa-user-plus"></i> Usuario *</label>
+            <input
+              type="text"
+              id="reg-user"
+              placeholder="Mínimo 3 caracteres"
+              required
+              minlength="3"
+            />
+          </div>
+          <div class="input-group">
+            <label><i class="fas fa-tag"></i> Nombre (opcional)</label>
+            <input type="text" id="reg-name" placeholder="Tu nombre completo" />
+          </div>
+          <div class="input-group">
+            <label><i class="fas fa-key"></i> Contraseña *</label>
+            <input
+              type="password"
+              id="reg-pass"
+              placeholder="Mínimo 4 caracteres"
+              required
+              minlength="4"
+            />
+          </div>
+          <div class="input-group">
+            <label
+              ><i class="fas fa-check-circle"></i> Confirmar Contraseña *</label
+            >
+            <input
+              type="password"
+              id="reg-confirm-pass"
+              placeholder="Repite tu contraseña"
+              required
+              minlength="4"
+            />
+          </div>
+          <button type="submit" id="register-btn" class="btn-neon">
+            <span>REGISTRARSE</span>
+            <i class="fas fa-user-check"></i>
+          </button>
+        </form>
+
+        <div id="toggle-form-btn" class="toggle-btn">
+          ¿No tienes cuenta? <span>REGÍSTRATE</span>
+        </div>
+
+        <div class="remember-section" id="remember-section">
+          <input type="checkbox" id="remember-session" />
+          <label for="remember-session">Recordar sesión</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- APP PRINCIPAL -->
+    <div id="main-app" class="hidden main-app">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="sidebar-logo">
+            <i class="fas fa-waveform"></i>
+          </div>
+          <span class="sidebar-title">NEBULA</span>
+        </div>
+        <nav class="sidebar-nav">
+          <div onclick="switchModule(0)" class="nav-item active" id="nav-0">
+            <i class="fas fa-play"></i>
+            <span>Reproductor</span>
+          </div>
+          <div onclick="switchModule(1)" class="nav-item" id="nav-1">
+            <i class="fas fa-folder"></i>
+            <span>Mi Música Local</span>
+          </div>
+          <div onclick="switchModule(2)" class="nav-item" id="nav-2">
+            <i class="fas fa-list"></i>
+            <span>Biblioteca</span>
+          </div>
+          <div onclick="switchModule(3)" class="nav-item" id="nav-3">
+            <i class="fas fa-users"></i>
+            <span>Artistas</span>
+          </div>
+        </nav>
+        <div class="sidebar-footer">
+          <i class="fas fa-circle-check"></i> v2.0 Nebula Cyberwave • 2026
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="main-header">
+          <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input
+              type="text"
+              id="search"
+              placeholder="Buscar canciones, artistas..."
+            />
+          </div>
+          <div class="header-actions">
+            <div class="now-playing">
+              <i class="fas fa-music"></i>
+              <span id="now-playing-indicator">Mi Biblioteca</span>
+            </div>
+            <div class="user-menu-container">
+              <div onclick="toggleUserMenu()" class="user-trigger">
+                <div class="user-avatar" id="user-avatar">D</div>
+                <span id="username">Demo</span>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div id="user-menu" class="user-menu hidden">
+                <div class="user-info">
+                  <span id="menu-username">Demo</span><br />
+                  <span id="menu-role">Usuario</span>
+                </div>
+                <button onclick="showProfile()">
+                  <i class="fas fa-user"></i> Perfil
+                </button>
+                <div class="divider"></div>
+                <button onclick="logout()">
+                  <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div class="modules-container" id="main-content">
+          <!-- MÓDULO 0: REPRODUCTOR -->
+          <div id="module-0" class="module active">
+            <div class="player-card-full">
+              <div class="track-info">
+                <img
+                  id="current-cover"
+                  src="https://picsum.photos/seed/default/80/80"
+                  alt="Cover"
+                />
+                <div>
+                  <div class="track-label">REPRODUCIENDO AHORA</div>
+                  <div id="current-title">Bienvenido</div>
+                  <div id="current-artist">MusixWave</div>
+                </div>
+              </div>
+              <div id="waveform" class="waveform"></div>
+              <div class="player-controls">
+                <button
+                  onclick="toggleShuffle()"
+                  id="shuffle-btn"
+                  class="control-btn mode-btn"
+                  title="Modo aleatorio"
+                >
+                  <i class="fas fa-random"></i>
+                </button>
+                <button onclick="prevTrack()" class="control-btn">
+                  <i class="fas fa-backward-step"></i>
+                </button>
+                <button onclick="togglePlay()" id="play-main" class="play-btn">
+                  <i id="play-icon-main" class="fas fa-play"></i>
+                </button>
+                <button onclick="nextTrack()" class="control-btn">
+                  <i class="fas fa-forward-step"></i>
+                </button>
+                <button
+                  onclick="toggleLoop()"
+                  id="loop-btn"
+                  class="control-btn mode-btn"
+                  title="Repetir canción"
+                >
+                  <i class="fas fa-repeat"></i>
+                </button>
+              </div>
+
+              <!-- CONTROL DE VOLUMEN DINÁMICO E INTERACTIVO -->
+              <div class="volume-section">
+                <div class="volume-header">
+                  <i class="fas fa-volume-down"></i>
+                  <span id="volume-label" class="volume-label">VOLUMEN</span>
+                  <i class="fas fa-volume-up"></i>
+                </div>
+                <div class="volume-joke-area" id="volume-joke-area">
+                  <div id="volume-emoji" class="volume-emoji">🎧</div>
+                  <div id="volume-message" class="volume-message">
+                    ¡Sube el volumen!
+                  </div>
+                </div>
+                <div class="volume-slider-container">
+                  <input
+                    type="range"
+                    id="volume-slider"
+                    class="volume-slider"
+                    min="0"
+                    max="100"
+                    value="70"
+                  />
+                  <div class="volume-percent" id="volume-percent">70%</div>
+                </div>
+                <div class="volume-fun-buttons">
+                  <button onclick="volumeJoke('bajo')" class="volume-fun-btn">
+                    🔇 MUY BAJO
+                  </button>
+                  <button onclick="volumeJoke('medio')" class="volume-fun-btn">
+                    🎵 NORMAL
+                  </button>
+                  <button onclick="volumeJoke('alto')" class="volume-fun-btn">
+                    🔊 ALTO
+                  </button>
+                  <button
+                    onclick="volumeJoke('explosion')"
+                    class="volume-fun-btn"
+                  >
+                    💥 EXPLOSIÓN
+                  </button>
+                </div>
+              </div>
+
+              <div class="player-info">
+                <div class="playback-stats">
+                  <span id="play-count" class="stat-badge">0</span>
+                  <span id="play-mode" class="mode-indicator">Normal</span>
+                </div>
+              </div>
+              <div class="progress-container">
+                <span id="time-current">0:00</span>
+                <div id="progress-main" class="progress-bar">
+                  <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <span id="time-total">0:00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- MÓDULO 1: MI MÚSICA LOCAL -->
+          <div id="module-1" class="module hidden">
+            <h2 class="section-title">
+              <i class="fas fa-folder"></i> Mi Música Local
+            </h2>
+            <div class="folder-selector">
+              <button onclick="selectFolder()" class="btn-neon folder-btn">
+                <i class="fas fa-folder-open"></i>
+                <span>SELECCIONAR CARPETA CON MÚSICA</span>
+              </button>
+              <p>
+                <i class="fas fa-info-circle"></i> Selecciona una carpeta con
+                archivos de audio (MP3, WAV, M4A, etc.)
+              </p>
+              <input
+                type="file"
+                id="folder-input"
+                webkitdirectory
+                directory
+                multiple
+                class="hidden"
+              />
+            </div>
+            <div id="folder-content" class="folder-content hidden">
+              <div class="folder-header">
+                <h3>
+                  <i class="fas fa-music"></i> Archivos de Audio Encontrados
+                </h3>
+                <span id="file-count">0 archivos</span>
+              </div>
+              <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input
+                  type="text"
+                  id="local-search"
+                  placeholder="Buscar en tus archivos locales..."
+                  oninput="filterLocalFiles()"
+                />
+                <button onclick="selectAllAndPlay()" class="select-all-btn">
+                  <i class="fas fa-check-double"></i> SELECCIONAR TODAS Y
+                  REPRODUCIR
+                </button>
+              </div>
+              <div id="audio-files-list" class="audio-files-grid"></div>
+              <div id="no-audio-files" class="no-files hidden">
+                <i class="fas fa-music-slash"></i>
+                <p>No se encontraron archivos de audio</p>
+                <small>Formatos: MP3, WAV, M4A, OGG, FLAC</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- MÓDULO 2: BIBLIOTECA -->
+          <div id="module-2" class="module hidden">
+            <h2 class="section-title">
+              <i class="fas fa-list"></i> Biblioteca
+            </h2>
+            <div id="library-list" class="library-grid"></div>
+          </div>
+
+          <!-- MÓDULO 3: ARTISTAS -->
+          <div id="module-3" class="module hidden">
+            <h2 class="section-title"><i class="fas fa-users"></i> Artistas</h2>
+            <div id="artists-grid" class="artists-grid"></div>
+          </div>
+        </div>
+
+        <!-- MINI-PLAYER -->
+        <div onclick="switchModule(0)" id="mini-player" class="mini-player">
+          <img
+            id="mini-cover"
+            src="https://picsum.photos/seed/default/64/64"
+            alt="Mini Cover"
+          />
+          <div class="mini-info">
+            <div id="mini-title">Bienvenido</div>
+            <div id="mini-artist">MusixWave</div>
+          </div>
+          <button
+            onclick="
+              event.stopPropagation();
+              togglePlay();
+            "
+            class="mini-play-btn"
+          >
+            <i id="mini-play-icon" class="fas fa-play"></i>
+          </button>
+          <div class="mini-progress-container">
+            <div
+              id="mini-progress"
+              class="mini-progress-bar"
+              onclick="
+                event.stopPropagation();
+                miniSeek(event);
+              "
+            >
+              <div id="mini-fill" class="mini-progress-fill"></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Elementos del fondo dinámico -->
+    <div class="stars-large"></div>
+    <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
+    <div class="shooting-star"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+
+    <!-- Scripts - RUTA CORREGIDA CON / -->
+    <script src="/scripts.js"></script>
+  </body>
+</html>
