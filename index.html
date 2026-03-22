@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover"
     />
     <title>MusixWave PRO • Nebula Cyberwave</title>
 
@@ -20,8 +20,8 @@
     <!-- WaveSurfer.js -->
     <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
 
-    <!-- Estilos personalizados - RUTA CORREGIDA CON / -->
-    <link rel="stylesheet" href="/style.css" />
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <!-- LOGIN SCREEN -->
@@ -117,6 +117,7 @@
 
     <!-- APP PRINCIPAL -->
     <div id="main-app" class="hidden main-app">
+      <!-- SIDEBAR -->
       <aside class="sidebar">
         <div class="sidebar-header">
           <div class="sidebar-logo">
@@ -147,7 +148,9 @@
         </div>
       </aside>
 
+      <!-- CONTENIDO PRINCIPAL -->
       <main class="main-content">
+        <!-- HEADER -->
         <header class="main-header">
           <div class="search-container">
             <i class="fas fa-search search-icon"></i>
@@ -185,6 +188,7 @@
           </div>
         </header>
 
+        <!-- MÓDULOS -->
         <div class="modules-container" id="main-content">
           <!-- MÓDULO 0: REPRODUCTOR -->
           <div id="module-0" class="module active">
@@ -230,14 +234,14 @@
                 </button>
               </div>
 
-              <!-- CONTROL DE VOLUMEN DINÁMICO E INTERACTIVO -->
+              <!-- CONTROL DE VOLUMEN DINÁMICO -->
               <div class="volume-section">
                 <div class="volume-header">
                   <i class="fas fa-volume-down"></i>
-                  <span id="volume-label" class="volume-label">VOLUMEN</span>
+                  <span class="volume-label">VOLUMEN</span>
                   <i class="fas fa-volume-up"></i>
                 </div>
-                <div class="volume-joke-area" id="volume-joke-area">
+                <div class="volume-joke-area">
                   <div id="volume-emoji" class="volume-emoji">🎧</div>
                   <div id="volume-message" class="volume-message">
                     ¡Sube el volumen!
@@ -297,17 +301,16 @@
             <div class="folder-selector">
               <button onclick="selectFolder()" class="btn-neon folder-btn">
                 <i class="fas fa-folder-open"></i>
-                <span>SELECCIONAR CARPETA CON MÚSICA</span>
+                <span>SELECCIONAR ARCHIVOS DE AUDIO</span>
               </button>
               <p>
-                <i class="fas fa-info-circle"></i> Selecciona una carpeta con
-                archivos de audio (MP3, WAV, M4A, etc.)
+                <i class="fas fa-info-circle"></i> Selecciona archivos de audio
+                (MP3, WAV, M4A, etc.) - Compatible con móviles
               </p>
               <input
                 type="file"
                 id="folder-input"
-                webkitdirectory
-                directory
+                accept="audio/*"
                 multiple
                 class="hidden"
               />
@@ -324,7 +327,7 @@
                 <input
                   type="text"
                   id="local-search"
-                  placeholder="Buscar en tus archivos locales..."
+                  placeholder="Buscar en tus archivos..."
                   oninput="filterLocalFiles()"
                 />
                 <button onclick="selectAllAndPlay()" class="select-all-btn">
@@ -405,7 +408,6 @@
     <div class="particle"></div>
     <div class="particle"></div>
 
-    <!-- Scripts - RUTA CORREGIDA CON / -->
-    <script src="/scripts.js"></script>
+    <script src="scripts.js"></script>
   </body>
 </html>

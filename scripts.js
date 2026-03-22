@@ -393,10 +393,7 @@ function initWavesurfer() {
   });
 
   wavesurfer.on("finish", onTrackEnd);
-
-  wavesurfer.on("error", (err) => {
-    console.log("Error en wavesurfer:", err);
-  });
+  wavesurfer.on("error", (err) => console.log("Error en wavesurfer:", err));
 }
 
 function loadTrack(i) {
@@ -413,7 +410,7 @@ function loadTrack(i) {
   currentIndex = i % tracks.length;
   const t = tracks[currentIndex];
 
-  if (!t || !t.url) return;
+  if (!t) return;
 
   document.getElementById("current-title").textContent =
     t.title || "Sin título";
@@ -429,7 +426,9 @@ function loadTrack(i) {
   document.getElementById("now-playing-indicator").textContent =
     t.title || "Sin título";
 
-  wavesurfer.load(t.url);
+  if (t.url) {
+    wavesurfer.load(t.url);
+  }
 
   document.getElementById("progress-fill").style.width = "0%";
   document.getElementById("mini-fill").style.width = "0%";
@@ -510,9 +509,7 @@ function togglePlay() {
 function onTrackEnd() {
   if (isLooping && !isShuffle) {
     wavesurfer.seekTo(0);
-    if (isPlaying) {
-      wavesurfer.play();
-    }
+    if (isPlaying) wavesurfer.play();
   } else {
     nextTrack();
   }
@@ -525,7 +522,7 @@ function miniSeek(event) {
   wavesurfer.seekTo(percent);
 }
 
-// ==================== CONTROL DE VOLUMEN DINÁMICO E INTERACTIVO ====================
+// ==================== CONTROL DE VOLUMEN ====================
 function initVolumeControl() {
   const volumeSlider = document.getElementById("volume-slider");
   if (volumeSlider) {
@@ -913,7 +910,7 @@ function initApp() {
 
   const welcomeMsg = {
     title: "🎵 Agrega tu música",
-    artist: "Selecciona una carpeta con música",
+    artist: "Selecciona archivos de audio",
     url: "",
     cover: "https://picsum.photos/seed/welcome/300/300",
   };
