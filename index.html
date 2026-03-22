@@ -44,6 +44,9 @@
               id="login-user"
               placeholder="Ingresa tu usuario"
               required
+              autocapitalize="none"
+              autocorrect="off"
+              spellcheck="false"
             />
           </div>
           <div class="input-group">
@@ -70,11 +73,19 @@
               placeholder="Mínimo 3 caracteres"
               required
               minlength="3"
+              autocapitalize="none"
+              autocorrect="off"
+              spellcheck="false"
             />
           </div>
           <div class="input-group">
             <label><i class="fas fa-tag"></i> Nombre (opcional)</label>
-            <input type="text" id="reg-name" placeholder="Tu nombre completo" />
+            <input
+              type="text"
+              id="reg-name"
+              placeholder="Tu nombre completo"
+              autocapitalize="words"
+            />
           </div>
           <div class="input-group">
             <label><i class="fas fa-key"></i> Contraseña *</label>
